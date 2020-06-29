@@ -202,6 +202,13 @@ class LobbyConnection:
             result = await conn.execute(select([coop_map]))
 
             maps = []
+            campaigns = [
+                "FA Campaign",
+                "Aeon Vanilla Campaign",
+                "Cybran Vanilla Campaign",
+                "UEF Vanilla Campaign",
+                "Custom Missions"
+            ]
             async for row in result:
                 json_to_send = {
                     "command": "coop_info",
@@ -210,13 +217,6 @@ class LobbyConnection:
                     "filename": row["filename"],
                     "featured_mod": "coop"
                 }
-                campaigns = [
-                    "FA Campaign",
-                    "Aeon Vanilla Campaign",
-                    "Cybran Vanilla Campaign",
-                    "UEF Vanilla Campaign",
-                    "Custom Missions"
-                ]
                 if row["type"] < len(campaigns):
                     json_to_send["type"] = campaigns[row["type"]]
                 else:
